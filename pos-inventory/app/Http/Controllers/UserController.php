@@ -39,7 +39,7 @@ class UserController extends Controller
     }
 
     function DashBoardPage():View{
-        return view('pages.auth.dashboard.dashboard-page');
+        return view('pages.dashboard.dashboard-page');
     }
 
     
@@ -56,7 +56,7 @@ class UserController extends Controller
                 'status' => "success",
                 'message' => "User Login Succesful",
                 'token'=>$token
-            ]);
+            ])->cookie('token',$token,60*24*30);
 
         } else {
             return response()->json([

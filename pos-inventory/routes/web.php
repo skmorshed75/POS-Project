@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 //Web API Routes
-Route::post('/user-login',[UserController::class,'UserLogin']);
-Route::post('/UserRegistration',[UserController::class,'UserRegistration']);
+//Route::post('/user-login',[UserController::class,'UserLogin']);
+Route::post('/user-registration',[UserController::class,'UserRegistration']);
 Route::post('/SendOTPToEmail',[UserController::class,'SendOTPToEmail']);
 Route::post('/OTPVerify',[UserController::class,'OTPVerify']);
 //Token verify for password reset

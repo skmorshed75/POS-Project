@@ -39,7 +39,6 @@
         </div>
     </div>
 </div>
-
 <script>
 
 
@@ -77,7 +76,7 @@
             })
             hideLoader();
             if(res.status===200 && res.data['status']==='success'){
-                successToast(res.data['message']);
+                successToast(res.data['message']); 
                 setTimeout(function (){
                     window.location.href='/userLogin'
                 },2000)

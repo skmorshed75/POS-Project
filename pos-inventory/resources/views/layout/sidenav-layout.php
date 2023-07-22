@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+<h1>SIDENAV-LAYOUT</h1>
+
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title></title>
+    <title>X-Bakery</title>
     <link rel="icon" type="image/x-icon" href="{{asset('/favicon.ico')}}" />
     <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{asset('css/animate.min.css')}}" rel="stylesheet" />
@@ -22,7 +24,6 @@
         <div class="indeterminate"></div>
     </div>
 </div>
-
 <nav class="navbar fixed-top px-0 shadow-sm bg-white">
     <div class="container-fluid">
 
