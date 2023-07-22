@@ -7,6 +7,7 @@ use App\Helper\JWTToken;
 use Exception;
 use Illuminate\Http\Request;
 
+use Illuminate\View\View;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Mail\Mailable;
@@ -16,14 +17,52 @@ use Illuminate\Contracts\Mail\Mailable;
 
 class UserController extends Controller
 {
+
+    function LoginPage():View{
+        return view('pages.auth.login-page');
+    }
+
+    function RegistrationPage():View{
+        return view('pages.auth.registration-page');
+    }
+
+    function SendOtpPage():View{
+        return view('pages.auth.send-otp-page');
+    }
+
+    function VerifyOtpPage():View{
+        return view('pages.auth.verify-otp-page');
+    }
+
+    function ResetPasswordPage():View{
+        return view('pages.auth.reset-pass-page');
+    }
+
+    function DashBoardPage():View{
+        return view('pages.auth.dashboard.dashboard-page');
+    }
+
+    
     function UserLogin(Request $request){
-        $res = User::where($request->input())->count();
-        if ($res == 1){
-            //Token Issue
+        //$res = User::where($request->input())->count();
+        $count = User::where('email','=',$request->input('email'))
+            ->where('password','=',$request->input('password'))
+            ->count();
+
+        if ($count == 1){
+            //User Login -> Token Issue
             $token = JWTToken::createToken($request->input('email'));
-            return response()->json(['msg' => "Success",'data'=>$token]);
+            return response()->json([
+                'status' => "success",
+                'message' => "User Login Succesful",
+                'token'=>$token
+            ]);
+
         } else {
-            return response()->json(['msg' => "Token Fail",'data'=>"Unauthorised"]);
+            return response()->json([
+                'message' => "Token Fail",
+                'data'=>"unauthorised"
+            ]);
         }
     }
 
