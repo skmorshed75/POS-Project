@@ -75,7 +75,7 @@
                 password:password
             })
             hideLoader();
-            if(res.status===200 && res.data['status']==='success'){
+            if(res.status===201){
                 successToast(res.data['message']); 
                 setTimeout(function (){
                     window.location.href='/userLogin'
