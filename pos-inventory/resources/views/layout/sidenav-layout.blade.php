@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<h1>SIDENAV-LAYOUT</h1>
-
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8"/>
@@ -46,7 +44,7 @@
                     <a href="" class="side-bar-item">
                         <span class="side-bar-item-caption">Profile</span>
                     </a>
-                    <a href="" class="side-bar-item">
+                    <a href="{{url('/logout')}}" class="side-bar-item">
                         <span class="side-bar-item-caption">Logout</span>
                     </a>
                 </div>

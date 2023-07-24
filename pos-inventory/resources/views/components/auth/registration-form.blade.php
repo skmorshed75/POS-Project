@@ -43,7 +43,6 @@
 
 
   async function onRegistration() {
-
         let email = document.getElementById('email').value;
         let firstName = document.getElementById('firstName').value;
         let lastName = document.getElementById('lastName').value;
@@ -73,16 +72,16 @@
                 lastName:lastName,
                 mobile:mobile,
                 password:password
-            })
+            });
             hideLoader();
-            if(res.status===201){
+            if(res.status===200){
                 successToast(res.data['message']); 
                 setTimeout(function (){
                     window.location.href='/userLogin'
-                },2000)
+                },2000);
             }
             else{
-                errorToast(res.data['message'])
+                errorToast(res.data['message']);
             }
         }
     }

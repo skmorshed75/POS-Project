@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Mail\OTPEmail;
 use App\Helper\JWTToken;
 use Exception;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
 use Illuminate\View\View;
@@ -56,18 +57,39 @@ class UserController extends Controller
                 'status' => "success",
                 'message' => "User Login Succesful",
                 'token'=>$token
-            ])->cookie('token',$token,60*24*30);
+            ],200)->cookie('token',$token,60*24*30);
 
         } else {
             return response()->json([
                 'message' => "Token Fail",
                 'data'=>"unauthorised"
-            ]);
+            ],401);
         }
     }
 
     function UserRegistration(Request $request){
-        return User::create($request->input());
+        //return User::create($request->input());
+        // or
+        try{
+            User::create([
+                'firstName' => $request->input('firstName'),
+                'lastName' => $request->input('lastName'),
+                'email' => $request->input('email'),
+                'mobile' => $request->input('mobile'),
+                'password'=> $request->input('password')
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "User registration completed successfully"
+            ],200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'status' => "failed",
+                'message' => "User registration has been failed"
+            ], 401);
+        };
+        
     }
 
     function SendOTPToEmail(Request $request){
@@ -139,6 +161,9 @@ class UserController extends Controller
 
     }
 
+    function UserLogout(){
+        return redirect('/userLogin')->cookie('token','',-1); //-1 = delete cookie
+    }
 
 
 }

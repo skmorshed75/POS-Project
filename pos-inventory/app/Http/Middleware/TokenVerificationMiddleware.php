@@ -19,10 +19,11 @@ class TokenVerificationMiddleware
         $token = $request->header('token');
         $result = JWTToken::DecodeToken($token); //Verify Token
 
-        if($result== "Unauthorised"){
+        if($result== "unauthorised"){
+            return redirect('/userLogin');
             return response()->json([
                 'msg'=>"failed",
-                'data'=>"Unauthorised"
+                'data'=>"unauthorised"
             ],status:401);
         } 
         else {

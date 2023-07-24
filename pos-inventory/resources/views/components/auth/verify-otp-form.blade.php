@@ -22,7 +22,7 @@
         }
         else{
             showLoader();
-            let res=await axios.post('/verify-otp', {
+            let res=await axios.post('/otp-verify', {
                 otp: otp,
                 email:sessionStorage.getItem('email')
             })
