@@ -19,34 +19,26 @@
 </div>
 
 <script>
-  async function ResetPass() {
+    async function ResetPass() {
         let password = document.getElementById('password').value;
         let cpassword = document.getElementById('cpassword').value;
-
-        if(password.length===0){
-            errorToast('Password is required')
+        if(password.length === 0){
+            errorToast('Password is required');
         }
-        else if(cpassword.length===0){
-            errorToast('Confirm Password is required')
+        else if(cpassword.length ===0) {
+            errorToast("Confirm password is required");
         }
-        else if(password!==cpassword){
-            errorToast('Password and Confirm Password must be same')
+        else if(password !== cpassword){
+            errorToast("New password & confirm password should be same");
         }
-        else{
-          showLoader()
-          let res=await axios.post("/reset-password",{password:password});
-          hideLoader();
-          if(res.status===200 && res.data['status']==='success'){
-              successToast(res.data['message']);
-              debugger;
-              setTimeout(function () {
-                  window.location.href="/userLogin";
-              },1000);
-          }
-          else{
-            errorToast(res.data['message'])
-          }
+        else {
+            let res = await axios.post("/reset-password",{password:password});
+            if(res.status ===200){
+                window.location.href = "/userLogin"
+            }
+            else {
+                errorToast("Request Fail!");
+            }
         }
-
     }
 </script>

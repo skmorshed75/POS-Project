@@ -6,7 +6,7 @@
                     <h4>ENTER OTP CODE</h4>
                     <br/>
                     <label>4 Digit Code Here</label>
-                    <input id="otp" placeholder="Code" class="form-control" type="text"/>
+                    <input id="code" placeholder="Code" class="form-control" type="text"/>
                     <br/>
                     <button onclick="VerifyOtp()"  class="btn w-100 float-end btn-primary">Next</button>
                 </div>
@@ -15,28 +15,23 @@
     </div>
 </div>
 <script>
-   async function VerifyOtp() {
-        let otp = document.getElementById('otp').value;
-        if(otp.length !==4){
-           errorToast('Invalid OTP')
+    async function VerifyOtp() {
+        let code = document.getElementById('code').value;
+        if(code.length!==4) {
+            errorToast("4 digit verification code is required");
         }
-        else{
-            showLoader();
-            let res=await axios.post('/otp-verify', {
-                otp: otp,
-                email:sessionStorage.getItem('email')
-            })
-            hideLoader();
-
-            if(res.status===200 && res.data['status']==='success'){
-                successToast(res.data['message'])
+        else {
+            let res = await axios.post(
+                "/otp-verify",{
+                    otp:code,
+                    email:sessionStorage.getItem('email')
+            });
+            if(res.status === 200){
                 sessionStorage.clear();
-                setTimeout(() => {
-                    window.location.href='/resetPassword'
-                }, 1000);
+                window.location.href = "/resetPassword";
             }
-            else{
-                errorToast(res.data['message'])
+            else {
+                errorToast("Something went Wrong!!!");
             }
         }
     }

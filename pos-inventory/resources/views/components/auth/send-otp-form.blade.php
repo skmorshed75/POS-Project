@@ -14,28 +14,23 @@
         </div>
     </div>
 </div>
-
 <script>
-   async function VerifyEmail() {
+    async function VerifyEmail() {
         let email = document.getElementById('email').value;
-        if(email.length === 0){
-           errorToast('Please enter your email address')
+        if(email.length === 0) {
+            errorToast("Email is Required");
         }
-        else{
+        else {
             showLoader();
-            let res = await axios.post('/send-otp', {email: email});
+            let res = await axios.post("/send-otp",{email : email});
             hideLoader();
-            if(res.status===200{
-                successToast(res.data['message'])
+            if(res.status ===200){
                 sessionStorage.setItem('email', email);
-                setTimeout(function (){
-                    window.location.href = '/verifyOtp';
-                }, 1000)
+                window.location.href = "/verifyOtp";
             }
-            else{
-                errorToast(res.data['message'])
+            else {
+                errorToast("Email not Found");
             }
         }
-
     }
 </script>

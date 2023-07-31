@@ -40,49 +40,45 @@
     </div>
 </div>
 <script>
-
-
-  async function onRegistration() {
+    async function onRegistration() {
         let email = document.getElementById('email').value;
         let firstName = document.getElementById('firstName').value;
         let lastName = document.getElementById('lastName').value;
         let mobile = document.getElementById('mobile').value;
         let password = document.getElementById('password').value;
-
-        if(email.length===0){
-            errorToast('Email is required')
+        if(email.length ===0){
+            errorToast("Email Required");
         }
-        else if(firstName.length===0){
-            errorToast('First Name is required')
+        else if(firstName.length===0) {
+            errorToast("First Name Required");
         }
-        else if(lastName.length===0){
-            errorToast('Last Name is required')
+        else if(mobile.length===0) {
+            errorToast("Mobile Required");
         }
-        else if(mobile.length===0){
-            errorToast('Mobile is required')
+        else if(password.length ===0) {
+            errorToast("Password Required");
         }
-        else if(password.length===0){
-            errorToast('Password is required')
-        }
-        else{
+        else {
             showLoader();
-            let res=await axios.post("/user-registration",{
-                email:email,
-                firstName:firstName,
-                lastName:lastName,
-                mobile:mobile,
-                password:password
-            });
+            let res = await axios.post(
+                "/user-registration",
+                {
+                    firstName:firstName,
+                    lastName:lastName,
+                    email:email,
+                    mobile:mobile,
+                    password:password
+                }
+            )   
             hideLoader();
-            if(res.status===200){
-                successToast(res.data['message']); 
-                setTimeout(function (){
-                    window.location.href='/userLogin'
-                },2000);
+            if(res.status === 200) {
+                successToast("User Registration is Completed");
+                window.location.href="/userLogin";
             }
-            else{
-                errorToast(res.data['message']);
+            else {
+                errorToast("User Registration Failed");
             }
         }
     }
+
 </script>

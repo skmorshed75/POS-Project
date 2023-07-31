@@ -56,7 +56,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => "success",
                 'message' => "User Login Succesful",
-                'token'=>$token
+                //'token'=>$token
             ],200)->cookie('token',$token,60*24*30);
 
         } else {
@@ -95,7 +95,6 @@ class UserController extends Controller
     function SendOTPToEmail(Request $request){
         $UserEmail = $request->input('email');
         $otp = rand(1000,9999);
-        
         //$UserCount = User::where($request->input())->count();
         $UserCount = User::where('email','=',$UserEmail)->count();
         if($UserCount == 1){
@@ -105,14 +104,14 @@ class UserController extends Controller
             User::where('email','=',$UserEmail)->update(['otp' => $otp]);
             //User::where($request->input())->update(['otp' => $otp]);
             return response()->json([
-                'msg'=>"Success!",
-                'data'=>"OTP sent to your email"
-            ]);
+                'msg'=>"success!",
+                'data'=>"4 digit OTP sent to your email"
+            ],200);
         } else {
             return response()->json([
                 'msg'=>"fail",
                 'data'=>"Unauthorised Login"
-            ]);
+            ],401);
         }
     }
 
@@ -120,38 +119,37 @@ class UserController extends Controller
         $UserEmail = $request->input('email');
         $otp = $request->input('otp');
         $UserCount = User::where('email','=',$UserEmail)
-            ->where('otp','=',$otp)->count(); 
+            ->where('otp','=',$otp)->count();
         
         if($UserCount==1){
             User::where('email','=',$UserEmail)->update(['otp' => '0']);
  
-            $token = JWTToken::createToken($request->input('email'));            
+            $token = JWTToken::createToken($request->input('email'));
             return response()->json([
-                'msg' => "Success", 
-                'data' => "OTP Verified",
-                'token'=> $token
-            ]);
+                'msg' => "success", 
+                'data' => "OTP Verified"
+            ],200)->cookie('token',$token,60*60*24);
         } else {
-            return response()->json(['msg' => "Fail", 'data' => "OTP not verified"]);
+            return response()->json(['status' => "failed", 'message' => "unauthorised"],401);
         }
     }
 
     function ResetPassword(Request $request){
-
         try{
             $email = $request->header('email');
             $password = $request->input('password');
             User::where('email','=',$email)->update(['password'=>$password]);
+            //Cookie can be removed from here with delete cookie command or it will be automatically deleted by the token time ie. 60*60*24
             return response()->json([
-                'msg' => "Success",
-                'data' =>"Password Reset Successful"
-            ]);
+                'status' => "success",
+                'message' =>"Password Reset Successful"
+            ],200);
         }
         catch(Exception $e){
             return response()->json([
-                'msg' => "Failed",
-                'data' =>"Password Reset Not Successful"
-            ]);
+                'status' => "fail",
+                'message' =>"Password Reset Not Successful"
+            ],401);
         }
         
     }
