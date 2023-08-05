@@ -13,60 +13,35 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Mail\Mailable;
 
-
-
-
 class UserController extends Controller
 {
-
+    //API Routes
     function LoginPage():View{
         return view('pages.auth.login-page');
     }
-
     function RegistrationPage():View{
         return view('pages.auth.registration-page');
     }
-
     function SendOtpPage():View{
         return view('pages.auth.send-otp-page');
     }
-
     function VerifyOtpPage():View{
         return view('pages.auth.verify-otp-page');
     }
-
     function ResetPasswordPage():View{
         return view('pages.auth.reset-pass-page');
     }
-
     function DashBoardPage():View{
         return view('pages.dashboard.dashboard-page');
     }
-
-    
-    function UserLogin(Request $request){
-        //$res = User::where($request->input())->count();
-        $count = User::where('email','=',$request->input('email'))
-            ->where('password','=',$request->input('password'))
-            ->count();
-
-        if ($count == 1){
-            //User Login -> Token Issue
-            $token = JWTToken::createToken($request->input('email'));
-            return response()->json([
-                'status' => "success",
-                'message' => "User Login Succesful",
-                //'token'=>$token
-            ],200)->cookie('token',$token,60*24*30);
-
-        } else {
-            return response()->json([
-                'message' => "Token Fail",
-                'data'=>"unauthorised"
-            ],401);
-        }
+    function ProfilePage():View{
+        return view('pages.dashboard.profile-page');
     }
 
+    
+
+
+    //Page Routes
     function UserRegistration(Request $request){
         //return User::create($request->input());
         // or
@@ -90,8 +65,30 @@ class UserController extends Controller
             ], 401);
         };
         
-    }
+    }   
+    function UserLogin(Request $request){
+        //$res = User::where($request->input())->count();
+        $count = User::where('email','=',$request->input('email'))
+            ->where('password','=',$request->input('password'))
+            ->select('id')->first();
+            //->count();
 
+        if ($count !== null){
+            //User Login -> Token Issue
+            $token = JWTToken::createToken($request->input('email'),$count->id);
+            return response()->json([
+                'status' => "success",
+                'message' => "User Login Succesful",
+                //'token'=>$token
+            ],200)->cookie('token',$token,60*24*30);
+
+        } else {
+            return response()->json([
+                'message' => "failed",
+                'data'=>"unauthorized"
+            ],401);
+        }
+    }
     function SendOTPToEmail(Request $request){
         $UserEmail = $request->input('email');
         $otp = rand(1000,9999);
@@ -114,7 +111,6 @@ class UserController extends Controller
             ],401);
         }
     }
-
     function OTPVerify(Request $request){
         $UserEmail = $request->input('email');
         $otp = $request->input('otp');
@@ -133,7 +129,6 @@ class UserController extends Controller
             return response()->json(['status' => "failed", 'message' => "unauthorised"],401);
         }
     }
-
     function ResetPassword(Request $request){
         try{
             $email = $request->header('email');
@@ -155,11 +150,31 @@ class UserController extends Controller
     }
 
     //After Login
-    function ProfileUpdate(){
-
+    function ProfileUpdate(Request $request){
+        $email = $request->header('email');
+        $user = User::where('email','=',$email)->first();
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Request Successful',
+                'data' => $user
+            ],200
+        );
     }
 
-    function UserLogout(){
+    //User Update from User Profile
+    function UserUpdate(Request $request){
+        $email = $request->header('email');
+        User::where('email','=',$email)->update([
+            'firstName'=>$request->input('firstName'),
+            'lastName' => $request->input('lastName'),
+            'mobile' => $request->input('mobile'),
+            'password' => $request->input('password')
+        ]);
+    }
+
+    function UserLogout(){        
         return redirect('/userLogin')->cookie('token','',-1); //-1 = delete cookie
     }
 
