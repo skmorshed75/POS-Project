@@ -46,6 +46,10 @@ Route::get('/verifyOtp',[UserController::class,'VerifyOtpPage']);
 Route::get('/resetPassword',[UserController::class,'ResetPasswordPage'])->middleware(TokenVerificationMiddleware::class);
 Route::get('/userProfile',[UserController::class,'ProfilePage'])->middleware(TokenVerificationMiddleware::class);
 
+Route::get('/customerPage',[CustomerController::class,'CustomerPage'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/productPage',[ProductController::class,'ProductPage'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/categoryPage',[CategoryController::class,'CategoryPage'])->middleware(TokenVerificationMiddleware::class);
+
 //After Authentication
 Route::get('/dashboard',[DashboardController::class,'DashboardPage'])->middleware(TokenVerificationMiddleware::class);
 

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 
 class CustomerController extends Controller
 {
+    //SHOW CUSTOMER PAGE
+    function CustomerPage():View {
+        return view("pages.dashboard.customer-page");
+    }
+    
     //NEW CUSTOMER DATA 
     function CustomerCreate(Request $request){
         $user_id = $request->header('id');

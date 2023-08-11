@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    //SHOW CATEGORY PAGE
+    function CategoryPage():View{
+        return view("pages.dashboard.category-page");
+    }
+
     //NEW Category DATA 
     function CategoryCreate(Request $request){
         $user_id = $request->header('id');

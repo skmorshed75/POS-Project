@@ -10,6 +10,11 @@
     <link href="{{asset('css/fontawesome.css')}}" rel="stylesheet" />
     <link href="{{asset('css/style.css')}}" rel="stylesheet" />
     <link href="{{asset('css/toastify.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
+    {{-- <link href="{{asset('css/jquery.dataTables.select.min.css')}}" rel="stylesheet" /> --}}
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('js/dataTables.select.min.js')}}"></script>
     <script src="{{asset('js/toastify-js.js')}}"></script>
     <script src="{{asset('js/axios.min.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
@@ -57,12 +62,43 @@
 <div id="sideNavRef" class="side-nav-open">
 </div>
 
-
 <div id="contentRef" class="content">
     @yield('content')
 </div>
 
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
+<a href="{{url('/dashboard')}}" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Dashboard</span>    
+</a>
+
+<a href="{{url('/customerPage')}}" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Customer</span>    
+</a>
+
+<a href="{{url('/productPage')}}" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Product</span>    
+</a>
+
+<a href="{{url('/categoryPage')}}" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Category</span>    
+</a>
+
+<a href="#Getting-Started" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Invoice</span>    
+</a>
+
+<a href="#Getting-Started" class="side-bar-item">
+    <i class="fa fa-chevron-circle-right text-dark"></i>
+    <span class="side-bar-item-caption">Report</span>    
+</a>
+
+
+<script src="{{asset('js/bootstrap.bundle.js')}}"></script>
 
 <script>
     function MenuBarClickHandler() {
