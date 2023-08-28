@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
 {
-    //use HasFactory;
+    use HasFactory;
+    //protected $fillable = ['total', 'discount', 'vat', 'user_id', 'customer_id'];
     protected $fillable = ['total', 'discount', 'vat', 'user_id', 'customer_id'];
-
+    
+ 
     function customer():BelongsTo{
         return $this->belongsTo(Customer::class);
     }
@@ -21,3 +23,5 @@ class Invoice extends Model
         return $this->hasMany(InvoiceProduct::class);
     }
 }
+
+

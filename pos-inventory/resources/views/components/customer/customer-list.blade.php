@@ -55,8 +55,8 @@ async function getList() {
             <td>${item.email}</td>
             <td>${item.mobile}</td>
             <td>
-                <button data-id = "${item.id}" class = "btn edit btn-sm btn-outline-success">Edit</button>
-                <button data-id = "${item.id}" class = "btn delete btn-sm btn-outline-danger">Delete</button>
+                <button data-id = "${item.id}" class = "btn editBtn btn-sm btn-outline-success">Edit</button>
+                <button data-id = "${item.id}" class = "btn deleteBtn btn-sm btn-outline-danger">Delete</button>
 
             </td>
         </tr>`;
@@ -64,15 +64,22 @@ async function getList() {
         tableList.append(row);
     })
 
-    $('.edit').on('click', function(){
+    $('.editBtn').on('click', function(){
         let id = $(this).data('id');
-        alert(id);
+        //await FillUpUpdateForm(id)
+        //$("#update-modal").modal('show');        
     })
 
-    $('.delete').on('click', function(){
+    $('.deleteBtn').on('click', function(){
         let id = $(this).data('id');
-        alert(id);
+        $("#delete-modal").modal('show');
+        $("#deleteID").val(id);        
     })
+
+    // new DataTable('#tableData',{
+    //     order:[[0,'desc']],
+    //     lengthMenu:[5,10,15,20,30]
+    // });
 
     tableData.DataTable({
         lengthMenu: [5,10,15,20,25,30,35,40,45,50],
